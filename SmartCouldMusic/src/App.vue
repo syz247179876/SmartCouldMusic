@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <!-- <router-view/> -->
-    <Detail></Detail>
+    <!-- 路由出口(跳转) -->
+    <!-- <router-view /> -->
+    <router-view />
   </div>
 </template>
 

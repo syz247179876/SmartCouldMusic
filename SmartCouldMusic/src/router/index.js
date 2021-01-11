@@ -27,7 +27,7 @@ export default new Router({
                 HelloWorld
             }
         },
-        // 匹配一切非正确页面
+        // 匹配一切非正确页面,例如404页面
         {
             path: '*',
             component: NoFound

@@ -21,6 +21,8 @@ const Search = () =>
     import ('@/components/search/Search')
 const Heat = () =>
     import ('@/components/heat/Heat')
+const Index = () =>
+    import ('@/components/common/Index')
 Vue.use(Router)
 
 // 路由就是路径和组件的对应关系
@@ -36,21 +38,25 @@ export default new Router({
             path: '/details/:name',
             name: 'Details',
             component: Details
-        }, {
+        },
+        {
+            path: "/",
+            component: Index,
+            children: [
+                { path: 'recommand', component: Recommand },
+                { path: 'heat-song', component: Heat },
+                { path: 'search', component: Search }
+            ]
+        },
+        {
             path: '/recommand',
             name: 'Recommand',
             component: Recommand, // 默认显示Recommand组件
-            // // 子路由
-            // children: [
-            //     { path: 'heat', component: Detail },
-            //     { path: 'search', component: Search },
-            //     { path: '*', component: NoFound }
-            // ]
         },
         {
             path: '/heat-song',
             name: 'Heat',
-            component: Heat
+            component: Heat,
         },
         {
             path: '/search',

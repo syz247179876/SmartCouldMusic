@@ -1,8 +1,5 @@
 <template>
   <div id="Recommand">
-    <HeaderLine></HeaderLine>
-    <!-- 头部标签栏 -->
-    <HeaderTab></HeaderTab>
     <!-- 轮播图 -->
     <Swipe></Swipe>
     <!-- 推荐歌单 -->
@@ -17,8 +14,6 @@
 </template>
 
 <script>
-const HeaderLine = () => import("../common/HeaderLine");
-const HeaderTab = () => import("../common/HeaderTab");
 const Swipe = () => import("../common/Swipe");
 const LastestMusic = () => import("../music/LastestMusic");
 const RecommandRadio = () => import("../recommands/RecommandRadio");
@@ -30,8 +25,6 @@ export default {
     return {};
   },
   components: {
-    HeaderLine,
-    HeaderTab,
     Swipe,
     RecommandRadio,
     RecommandMV,

@@ -13,7 +13,7 @@ export default {
   name: "Swipe",
   data() {
     return {
-      swipeNumber: 8, // 轮播图最大个数
+      swipeNumber: 5, // 轮播图最大个数
       swipeList: [], // 轮播图列表
       picture: "picture",
     };
@@ -21,11 +21,11 @@ export default {
   methods: {
     getSwipe() {
       this.$http
-        .get("http://localhost:3000/banner/?type=2")
+        .get("/banner/?type=2")
         // 成功回调
         .then((res) => {
           let banners = res.data.banners;
-          for (let i = 0; i < this.swipeNumber; i++) {
+          for (let i = this.start; i < this.end; i++) {
             let pic = banners[i].pic; // picture的路径
             let url = banners[i].pic; // 跳转路由
             this.swipeList.push({ pic: pic, url: url });
@@ -36,9 +36,15 @@ export default {
           // Toast.err(res.data);
         });
     },
+    computeRetrieve() {
+      this.rand = Math.ceil(Math.random() * 4); // 生成0-4之间的随机数
+      this.start = this.rand // 生成随机start
+      this.end = this.start + this.swipeNumber;
+    },
   },
   created() {
     // 请求获取轮播图
+    this.computeRetrieve();
     this.getSwipe();
   },
 };

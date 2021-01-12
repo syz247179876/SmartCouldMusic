@@ -14,15 +14,15 @@
           <p>{{ music.songName }}</p>
           <van-icon name="cart-o" color="#ee0a24" />
           <span class="artist">{{ music.artistName }}-{{ music.songName }}</span>
+          <hr class="hr">
         </template>
-        <button>播放按钮</button>
       </van-cell>
     </van-list>
   </div>
 </template>
 
 <script>
-const Title = () => import("@/components/music/Title");
+const Title = () => import("@/components/common/Title");
 
 export default {
   name: "LastestMusic",
@@ -43,6 +43,7 @@ export default {
   methods: {
     onLoad() {
       setTimeout(() => {
+
         if (this.refreshing) {
           this.displayList = [];
           this.refreshing = false;
@@ -83,11 +84,14 @@ export default {
 <style>
 .van-cell {
   text-align: left;
-  margin-top: 20px;
+  margin-top: -10px;
   margin-bottom: 1px;
   font-size: 20px;
 }
 .artist {
   font-size: 15px;
+}
+.hr{
+  border-color: papayawhip;
 }
 </style>

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-const Title = () => import("@/components/music/Title");
+const Title = () => import("@/components/common/Title");
 export default {
   name: "RecommandSong",
   components: { Title },

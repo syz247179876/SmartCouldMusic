@@ -13,53 +13,56 @@ const NoFound = () =>
     import ('@/components/common/NoFound')
 const Detail = () =>
     import ('@/components/music/Detail')
-const Index = () =>
-    import ('@/components/common/Index')
 const Details = () =>
     import ('@/components/learn_vue/Details')
-const List = () =>
-    import ('@/components/learn_vue/List')
-
-
+const Recommand = () =>
+    import ('@/components/recommands/Recommand')
+const Search = () =>
+    import ('@/components/search/Search')
+const Heat = () =>
+    import ('@/components/heat/Heat')
 Vue.use(Router)
 
 // 路由就是路径和组件的对应关系
 export default new Router({
-    routes: [{
+    routes: [
+        // 进入界面
+        {
             path: '/',
-            name: 'HelloWorld',
-            component: HelloWorld
+            // 重定向
+            redirect: '/recommand'
+        },
+        {
+            path: '/details/:name',
+            name: 'Details',
+            component: Details
+        }, {
+            path: '/recommand',
+            name: 'Recommand',
+            component: Recommand, // 默认显示Recommand组件
+            // // 子路由
+            // children: [
+            //     { path: 'heat', component: Detail },
+            //     { path: 'search', component: Search },
+            //     { path: '*', component: NoFound }
+            // ]
+        },
+        {
+            path: '/heat-song',
+            name: 'Heat',
+            component: Heat
+        },
+        {
+            path: '/search',
+            name: 'Search',
+            component: Search
         },
         {
             path: '/detail',
             name: 'Detail',
             component: Detail
         },
-        {
-            path: '/list',
-            name: 'List',
-            component: List
-        },
-        {
-            path: '/details',
-            name: 'List',
-            component: List
-        },
-        // 动态路由, 可以用于获取详情页
-        {
-            path: '/details/:name',
-            name: 'Details',
-            component: Details
-        }, {
-            path: '/index',
-            name: 'Index',
-            component: Index,
-            // 子路由
-            children: [
-                { path: 'detail', component: Detail },
-                { path: '*', component: NoFound }
-            ]
-        },
+
         // 匹配一切非正确页面,例如404页面
         {
             path: '*',

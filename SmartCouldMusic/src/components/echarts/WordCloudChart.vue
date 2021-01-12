@@ -9,7 +9,9 @@
 </template>
 
 <script>
-import "echarts-wordcloud/dist/echarts-wordcloud";  // 1.1.3
+import "echarts-wordcloud/dist/echarts-wordcloud"; // 1.1.2
+
+// import 'echarts-wordcloud';
 
 export default {
   name: "WordCloudChart",
@@ -31,7 +33,7 @@ export default {
       type: String,
       default: "400px",
     },
-    data: {
+    datas: {
       type: Array,
       default: [],
     },
@@ -47,13 +49,23 @@ export default {
   data() {
     return {
       chart: null,
+      testdata: [
+        {
+          name: "Java",
+          value: 2300,
+        },
+        {
+          name: "python",
+          value: 2000,
+        },
+      ],
     };
   },
   methods: {
     // 初始化图表
     initChart() {
       this.chart = this.$echarts.init(document.getElementById(this.id)); // 获取图表容器
-      const option = {
+      let option = {
         title: {
           text: this.title,
           x: "center",
@@ -68,6 +80,7 @@ export default {
             sizeRange: [14, 60],
             //用来调整词的旋转方向，，[0,0]--代表着没有角度，也就是词为水平方向，需要设置角度参考注释内容
             rotationRange: [0, 0],
+
             //随机生成字体颜色
             textStyle: {
               normal: {
@@ -92,22 +105,29 @@ export default {
             width: "200%",
             height: "200%",
             //数据
-            data: this.data,
+            data: this.datas,
           },
         ],
       };
-      this.chart.setOption(option);
+
+      this.chart.setOption(option, true);
     },
   },
-  mounted() {
-    // 模板渲染程html后调用
-    this.initChart();
+  // 解决问题核心
+  watch: {
+    datas() {
+      // 数据更新后,在dom渲染后,自动执行该函数
+      this.$nextTick(() => {
+        this.initChart();
+      });
+    },
   },
   beforeDestroy() {
     // 在销毁组件前销毁图表
     if (!this.chart) {
       return;
     }
+    this.chart.clear();
     this.chart.dispose();
     this.chart = null;
   },

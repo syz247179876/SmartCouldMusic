@@ -8,12 +8,15 @@
       :finished_text="finished_text"
       @load="onLoad"
     >
-    <!-- 音乐项 -->
-      <van-cell
-        v-for="(music, index) in displayList"
-        :key="index"
-        :title="music.songName"
-      />
+      <!-- 音乐项 -->
+      <van-cell v-for="(music, index) in displayList" :key="index">
+        <template #default>
+          <p>{{ music.songName }}</p>
+          <van-icon name="cart-o" color="#ee0a24" />
+          <span class="artist">{{ music.artistName }}-{{ music.songName }}</span>
+        </template>
+        <button>播放按钮</button>
+      </van-cell>
     </van-list>
   </div>
 </template>
@@ -78,5 +81,13 @@ export default {
 </script>
 
 <style>
-
+.van-cell {
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 1px;
+  font-size: 20px;
+}
+.artist {
+  font-size: 15px;
+}
 </style>

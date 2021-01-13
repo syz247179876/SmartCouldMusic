@@ -1,9 +1,11 @@
 <template>
   <div id="Index">
-    <!-- 头部导航栏 -->
-    <HeaderLine></HeaderLine>
-    <!-- 头部标签栏 -->
-    <HeaderTab></HeaderTab>
+    <div class="headers">
+      <!-- 头部导航栏 -->
+      <HeaderLine></HeaderLine>
+      <!-- 头部标签栏 -->
+      <HeaderTab></HeaderTab>
+    </div>
     <router-view />
   </div>
 </template>
@@ -21,4 +23,5 @@ export default {
 </script>
 
 <style>
+
 </style>

@@ -1,7 +1,11 @@
 <template>
   <div id="Swipe">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item v-for="(swipe, index) in swipeList" :key="index">
+      <van-swipe-item
+        v-for="(swipe, index) in swipeList"
+        :key="index"
+        @click="accessDetail(swipe)"
+      >
         <img :src="swipe.pic" :class="picture" />
       </van-swipe-item>
     </van-swipe>
@@ -14,11 +18,12 @@ export default {
   data() {
     return {
       swipeNumber: 5, // 轮播图最大个数
-      swipeList: [], // 轮播图列表
+      swipeList: [], // 轮播图列表HelloWorld
       picture: "picture",
     };
   },
   methods: {
+    // 请求API
     getSwipe() {
       this.$http
         .get("/banner/?type=2")
@@ -27,8 +32,9 @@ export default {
           let banners = res.data.banners;
           for (let i = this.start; i < this.end; i++) {
             let pic = banners[i].pic; // picture的路径
-            let url = banners[i].pic; // 跳转路由
-            this.swipeList.push({ pic: pic, url: url });
+            let bannerId = banners[i].bannerId  // banner的uid
+            let songId = banners[i].song.id
+            this.swipeList.push({ pic: pic, bannerId: bannerId, songId:songId });
           }
         })
         // 失败的回调
@@ -36,10 +42,15 @@ export default {
           // Toast.err(res.data);
         });
     },
+    // 计算取数据的区间
     computeRetrieve() {
-      this.rand = Math.ceil(Math.random() * 4); // 生成0-4之间的随机数
-      this.start = this.rand // 生成随机start
+      this.rand = Math.ceil(Math.random() * 2); // 生成0-3之间的随机数
+      this.start = this.rand; // 生成随机start
       this.end = this.start + this.swipeNumber;
+    },
+    // 进入详情页
+    accessDetail(swipe) {
+      this.$router.push("/detail?pic="+swipe.pic+"&bid="+swipe.bannerId+"&sid="+swipe.songId);
     },
   },
   created() {

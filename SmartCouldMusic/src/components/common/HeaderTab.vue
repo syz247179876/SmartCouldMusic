@@ -30,8 +30,8 @@ export default {
           to: "/recommand",
         },
         {
-          title: "热歌榜",
-          name: "热歌榜",
+          title: "新歌榜",
+          name: "新歌榜",
           to: "/heat-song",
         },
         {
@@ -42,6 +42,8 @@ export default {
       ],
     };
   },
+  created(){
+  }
 };
 </script>
 

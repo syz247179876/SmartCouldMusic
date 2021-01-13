@@ -21,7 +21,7 @@ export default {
   padding-left: 10px;
 }
 .title-style {
-  margin-left: 20px;
+  margin-left: 0px;
   text-align: left;
   margin-top: 10px;
   margin-bottom: 10px;

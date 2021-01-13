@@ -11,10 +11,20 @@
       <!-- 音乐项 -->
       <van-cell v-for="(music, index) in displayList" :key="index">
         <template #default>
-          <p>{{ music.songName }}</p>
-          <van-icon name="cart-o" color="#ee0a24" />
-          <span class="artist">{{ music.artistName }}-{{ music.songName }}</span>
-          <hr class="hr">
+          <p>
+            {{ music.songName }}
+            <i
+              class="play-icon"
+              :id="index"
+              @click="startRadio(music, index)"
+            ></i>
+          </p>
+
+          <i class="sq-icon"></i>
+          <span class="artist"
+            >{{ music.artistName }}-{{ music.songName }}</span
+          >
+          <hr class="hr" />
         </template>
       </van-cell>
     </van-list>
@@ -38,12 +48,12 @@ export default {
       startLength: 0, // 起始请求下标
       maxLength: 100,
       displayList: [],
+      status: [], // 播放状态列表, true表示正在播放,false表示未播放
     };
   },
   methods: {
     onLoad() {
       setTimeout(() => {
-
         if (this.refreshing) {
           this.displayList = [];
           this.refreshing = false;
@@ -70,9 +80,24 @@ export default {
               songName: data[i].name, // 歌曲名
               artistName: data[i].artistName, // 歌曲作者
             });
+            this.status.push(false);
           }
         })
         .catch((err) => {});
+    },
+    // 播放音乐, 动态修改图标
+    startRadio(music, index) {
+      let item = document.getElementById(index); // 获取播放dom元素
+      if (this.status[index] == false) {
+        item.style.backgroundPositionY = "-46px";
+        this.status.forEach((element) => {
+          
+        });
+        this.status[index] = true; // 正在播放状态
+      } else {
+        item.style.backgroundPositionY = "4px";
+        this.status[index] = false; // 停止播放状态
+      }
     },
   },
   created() {
@@ -91,7 +116,25 @@ export default {
 .artist {
   font-size: 15px;
 }
-.hr{
+.hr {
   border-color: papayawhip;
+}
+.sq-icon {
+  display: inline-block;
+  width: 20px;
+  height: 10px;
+  background-image: url("../../../static/img/index_icon_2x.png");
+  background-position-x: -3px;
+  background-position-y: -3px;
+}
+
+.play-icon {
+  float: right;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-image: url(../../../static/img/list_sprite.png);
+  background-position-x: -47px;
+  background-position-y: 4px;
 }
 </style>

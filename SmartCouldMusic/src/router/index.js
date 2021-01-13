@@ -13,14 +13,12 @@ const NoFound = () =>
     import ('@/components/common/NoFound')
 const Detail = () =>
     import ('@/components/music/Detail')
-const Details = () =>
-    import ('@/components/learn_vue/Details')
 const Recommand = () =>
     import ('@/components/recommands/Recommand')
 const Search = () =>
     import ('@/components/search/Search')
-const Heat = () =>
-    import ('@/components/heat/Heat')
+const New = () =>
+    import ('@/components/rank/New')
 const Index = () =>
     import ('@/components/common/Index')
 Vue.use(Router)
@@ -34,41 +32,27 @@ export default new Router({
             // 重定向
             redirect: '/recommand'
         },
-        {
-            path: '/details/:name',
-            name: 'Details',
-            component: Details
-        },
+        // {
+        //     path: '/details/:name',
+        //     name: 'Details',
+        //     component: Details
+        // },
+        // 推荐, 热歌, 搜索
         {
             path: "/",
             component: Index,
             children: [
                 { path: 'recommand', component: Recommand },
-                { path: 'heat-song', component: Heat },
+                { path: 'heat-song', component: New },
                 { path: 'search', component: Search }
             ]
         },
+        // 详细歌单,动态匹配参数歌单uid
         {
-            path: '/recommand',
-            name: 'Recommand',
-            component: Recommand, // 默认显示Recommand组件
+            path: "/detail",
+            name: 'Detail',
+            component: Detail,
         },
-        // {
-        //     path: '/heat-song',
-        //     name: 'Heat',
-        //     component: Heat,
-        // },
-        // {
-        //     path: '/search',
-        //     name: 'Search',
-        //     component: Search
-        // },
-        // {
-        //     path: '/detail',
-        //     name: 'Detail',
-        //     component: Detail
-        // },
-
         // 匹配一切非正确页面,例如404页面
         {
             path: '*',

@@ -3,23 +3,28 @@
     <van-swipe class="my-swipe" indicator-color="white">
       <van-swipe-item>
         <img :src="coverImgUrl" class="picture" />
-        
       </van-swipe-item>
-      <span class="time">更新时间:2020-1-10</span>
+      <span class="time">更新时间:{{ dateString }}</span>
     </van-swipe>
+    <!-- 通用音乐排行列表 -->
+    <RankMusicList :musicList="musicList"></RankMusicList>
   </div>
 </template>
 
 <script>
+
+const RankMusicList = () => import("@/components/music/RankMusicList")
 export default {
   name: "New",
+  components:{RankMusicList},
   data() {
     return {
       name: "", // 排行榜名字
-      updateTime: "", // 排行榜更新时间
+      updateTime: 0, // 排行榜更新时间
       coverImgUrl: "", // 排行榜图片
-      tracks: [], // 歌曲榜单数组
+      tracks: [], // 通用歌曲榜单数据数组
       id: "2809577409",
+      musicList: [], // 歌曲细节数组(已解析)
     };
   },
   methods: {
@@ -35,13 +40,38 @@ export default {
         })
         .catch((err) => {});
     },
-    dateTrans(){
-        
-    }
+    // 对时间追加0
+    add0(element) {
+      return element < 10 ? "0" + element : element;
+    },
+    // 时间戳 --- >String
+    dateTrans() {
+      let date = new Date(parseInt(this.updateTime));
+      let year = date.getFullYear(); // 获取年份
+      let month = date.getMonth() + 1; // 获取月份
+      let day = date.getDate(); // 获取日期
+      this.dateString = year + "-" + this.add0(month) + "-" + this.add0(day);
+    },
+    // 解析歌曲细节
   },
   created() {
     // 获取欧美新歌榜
     this.getNew();
+    // timestamp ---> String
+    this.dateTrans();
+  },
+  watch: {
+    // 监听数据的改变
+    tracks() {
+      this.tracks.forEach((element) => {
+        this.musicList.push({
+          name: element.name, // 歌曲名
+          id: element.id, // 歌曲id
+          artists: element.ar, // 作者们的信息
+          publishTime: element.publishTime, // 发布时间
+        });
+      });
+    },
   },
 };
 </script>
@@ -52,11 +82,11 @@ export default {
   height: 280px;
   z-index: 965;
 }
-.time{
-    position:absolute;
-    z-index: 996;
-    left: 100px;
-    bottom: 40px;
-    color: wheat;
+.time {
+  position: absolute;
+  z-index: 996;
+  left: 100px;
+  bottom: 40px;
+  color: wheat;
 }
 </style>

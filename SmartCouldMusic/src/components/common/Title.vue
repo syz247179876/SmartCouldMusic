@@ -1,26 +1,29 @@
 <template>
-  <div id="Title" :class="title_style">
-    <p>
+  <div id="Title" class="title-style">
+    <span class="line"></span>
+    <span>
       {{ name }}
-    </p>
+    </span>
   </div>
 </template>
 
 <script>
 export default {
   name: "Title",
-  data() {
-    return {
-      title_style: "title-style",
-    };
-  },
   props: ["name"],
 };
 </script>
 
 <style>
+.line{
+  line-height: 20px;
+  border-left: 2px red solid;
+  padding-left: 10px;
+}
 .title-style {
   margin-left: 20px;
   text-align: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>

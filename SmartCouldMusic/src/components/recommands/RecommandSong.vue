@@ -10,7 +10,7 @@
       >
         <div>
           <van-image :src="item.picture_url" />
-          <p :class="intorduce">{{ item.text }}</p>
+          <p :class="introduce">{{ item.text }}</p>
         </div>
       </van-grid-item>
     </van-grid>
@@ -27,7 +27,7 @@ export default {
       title_style: "title-style",
       title: "推荐歌单",
       RecommandSongList: [],
-      intorduce: "intorduce",
+      introduce: "introduce",
       limit: 6,
     };
   },
@@ -59,7 +59,14 @@ export default {
 </script>
 
 <style>
-.intorduce {
+.introduce {
   font-size: 16px;
+  margin:0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;   /* 两行 */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;/* 省略号 */
+  overflow: hidden;  /* 隐藏额外内容 */
 }
+
 </style>

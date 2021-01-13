@@ -53,21 +53,21 @@ export default new Router({
             name: 'Recommand',
             component: Recommand, // 默认显示Recommand组件
         },
-        {
-            path: '/heat-song',
-            name: 'Heat',
-            component: Heat,
-        },
-        {
-            path: '/search',
-            name: 'Search',
-            component: Search
-        },
-        {
-            path: '/detail',
-            name: 'Detail',
-            component: Detail
-        },
+        // {
+        //     path: '/heat-song',
+        //     name: 'Heat',
+        //     component: Heat,
+        // },
+        // {
+        //     path: '/search',
+        //     name: 'Search',
+        //     component: Search
+        // },
+        // {
+        //     path: '/detail',
+        //     name: 'Detail',
+        //     component: Detail
+        // },
 
         // 匹配一切非正确页面,例如404页面
         {

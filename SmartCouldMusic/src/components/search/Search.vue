@@ -1,7 +1,7 @@
 <template>
   <div id="Search">
     <van-search
-      v-model="search_value"
+      v-model="searchValue"
       placeholder="请输入搜索关键词"
       input-align="center"
       shape="round"
@@ -12,90 +12,39 @@
       </template></van-search
     >
     <!-- 热词云图 -->
-    <WordCloudChart
-      :id="cloudWordId"
-      :title="cloudWordTitle"
-      :datas="heatSongList"
-      :category="cloudWordCategory"
-    ></WordCloudChart>
-
+    <div v-if="isShowWordCloud">
+      <WordCloudChart
+        :id="cloudWordId"
+        :title="cloudWordTitle"
+        :datas="heatSongList"
+        :category="cloudWordCategory"
+      ></WordCloudChart>
+    </div>
+    <div v-else>
+      <SearchResultIndexBar :searchResultList="searchResultList" :searchValue="searchValue">
+      </SearchResultIndexBar>
+    </div>
   </div>
 </template>
 
 <script>
 import WordCloudChart from "@/components/echarts/WordCloudChart";
+import SearchResultIndexBar from "@/components/search/SearchResultIndexBar";
 export default {
   name: "Search",
-  components: { WordCloudChart },
+  components: { WordCloudChart, SearchResultIndexBar },
   data() {
     return {
+      isShowWordCloud: true, // 是否显示
       cloudWordCategory: "wordCloud",
-      search_value: "",
-      heatSongList: [],
-      testList: [
-        {
-          name: "Java",
-          value: 2300,
-        },
-        {
-          name: "python",
-          value: 2000,
-        },
-      ],
       cloudWordId: "search-cloudword",
       cloudWordTitle: "热搜榜",
+      searchValue: "", // 关键词
+      heatSongList: [], // 热度词数组
+      searchResultList: [], // 搜索结果数组
     };
   },
   methods: {
-    initChart() {
-      this.chart = this.$echarts.init(document.getElementById("test")); // 获取图表容器
-      let option = {
-        title: {
-          text: this.cloudWordTitle,
-          x: "center",
-        },
-        // backgroundColor: "#fff",
-        series: [
-          {
-            type: "wordCloud",
-            //用来调整词之间的距离
-            gridSize: 10,
-            //用来调整字的大小范围
-            sizeRange: [14, 60],
-            //用来调整词的旋转方向，，[0,0]--代表着没有角度，也就是词为水平方向，需要设置角度参考注释内容
-            rotationRange: [0, 0],
-
-            //随机生成字体颜色
-            textStyle: {
-              normal: {
-                color: function () {
-                  return (
-                    "rgb(" +
-                    Math.round(Math.random() * 255) +
-                    ", " +
-                    Math.round(Math.random() * 255) +
-                    ", " +
-                    Math.round(Math.random() * 255) +
-                    ")"
-                  );
-                },
-              },
-            },
-            //位置相关设置
-            left: "center",
-            top: "center",
-            right: null,
-            bottom: null,
-            width: "200%",
-            height: "200%",
-            //数据
-            data: this.heatSongList,
-          },
-        ],
-      };
-
-      this.chart.setOption(option, true);
-    },
     // 获取搜索关键词
     getKeyword() {
       this.$http
@@ -111,21 +60,32 @@ export default {
         })
         .catch((err) => {});
     },
+    // 将指定数据集添加到数组中
+    appendResultList(array) {
+      array.forEach((element) => {
+        this.searchResultList.push({
+          matchWord: element.keyword, //  匹配唱片
+        });
+      });
+    },
     // 搜索关键词
-    onSearch() {},
+    onSearch() {
+      this.isShowWordCloud = false;
+      this.searchResultList = []
+      this.$http
+        .get("search/suggest?keywords=" + this.searchValue+"&type=mobile")
+        .then((res) => {
+          if (res.data != null) {
+            let matchList = res.data.result.allMatch;
+            this.appendResultList(matchList);
+          }
+        });
+    },
   },
   created() {
     // 获取数据
     this.getKeyword();
   },
-  watch:{
-    heatSongList(){
-      // 数据更新后,在dom渲染后,自动执行该函数
-      this.$nextTick(()=>{
-        this.initChart()
-      })
-    }
-  }
 };
 </script>
 

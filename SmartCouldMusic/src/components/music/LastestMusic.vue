@@ -41,13 +41,13 @@ export default {
     return {
       title: "最新音乐",
       finished_text: "正在拼命加载...",
-      musicList: [],
+      musicList: [],   // 全部的最新音乐列表
       finished: false,
       loading: false,
       perLength: 10, // 每次显示获取的数据长度
       startLength: 0, // 起始请求下标
       maxLength: 100,
-      displayList: [],
+      displayList: [],   // 允许显示的最新音乐列表
       status: [], // 播放状态列表, true表示正在播放,false表示未播放
     };
   },
@@ -106,7 +106,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .van-cell {
   text-align: left;
   margin-top: -10px;

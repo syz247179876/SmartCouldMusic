@@ -14,6 +14,8 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
     // 引入echarts
 Vue.prototype.$echarts = echarts // version:4.2.1
+
+Vue.prototype.HOST = '/music-play' // 匹配播放音乐url
     /* eslint-disable no-new */
 new Vue({
     el: '#app',

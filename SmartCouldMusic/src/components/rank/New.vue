@@ -7,16 +7,15 @@
       <span class="time">更新时间:{{ dateString }}</span>
     </van-swipe>
     <!-- 通用音乐排行列表 -->
-    <RankMusicList :musicList="musicList"></RankMusicList>
+    <RankMusicList :musicList="musicList" :status="status"></RankMusicList>
   </div>
 </template>
 
 <script>
-
-const RankMusicList = () => import("@/components/music/RankMusicList")
+const RankMusicList = () => import("@/components/music/RankMusicList");
 export default {
   name: "New",
-  components:{RankMusicList},
+  components: { RankMusicList },
   data() {
     return {
       name: "", // 排行榜名字
@@ -25,12 +24,13 @@ export default {
       tracks: [], // 通用歌曲榜单数据数组
       id: "2809577409",
       musicList: [], // 歌曲细节数组(已解析)
+      status: [], // 播放状态列表, true表示正在播放,false表示未播放
     };
   },
   methods: {
     getNew() {
       this.$http
-        .get("/top/list?id=" + this.id)
+        .get("/api/top/list?id=" + this.id)
         .then((res) => {
           let playList = res.data.playlist; // 获取数据
           this.name = playList.name; // 排行榜名字
@@ -70,6 +70,7 @@ export default {
           artists: element.ar, // 作者们的信息
           publishTime: element.publishTime, // 发布时间
         });
+        this.status.push(false);
       });
     },
   },

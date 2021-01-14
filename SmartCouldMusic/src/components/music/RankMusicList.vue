@@ -90,15 +90,13 @@ export default {
         if (this.displayList.length >= this.maxLength) this.finished = true; // 完成刷新
       }, 1000);
     },
-    // 解析作者
+    // 解析作者数组
     parseArtist() {
-      while (this.musicList.length == 0) {}
       this.musicList.forEach((element) => {
         let artistList = [];
         element.artists.forEach((element) => {
           artistList.push(element.name);
         });
-        console;
         this.artistStringList.push(artistList.toString());
       });
       this.maxLength = this.musicList.length;

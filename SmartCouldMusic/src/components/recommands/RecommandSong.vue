@@ -6,6 +6,7 @@
         v-for="(item, index) in RecommandSongList"
         :key="index"
         :to="item.detail_url"
+        @click="toSongList(item.id)"
       >
         <div>
           <van-image :src="item.picture_url" />
@@ -46,13 +47,18 @@ export default {
           for (let i = this.start; i < this.end; i++) {
             let name = result[i].name; // 获取歌单介绍
             let picUrl = result[i].picUrl; // 获取歌单图片
-            this.RecommandSongList.push({ text: name, picture_url: picUrl }); // 加入队列
+            let id = result[i].id;     // 获取歌单id
+            this.RecommandSongList.push({ text: name, picture_url: picUrl, id:id }); // 加入队列
           }
         })
         .catch((err) => {
           // Toast.err(res.data);
         });
     },
+    // 进入歌单详情页
+    toSongList(id){
+      this.$router.push('/playlist/'+id); 
+    }
   },
 };
 </script>

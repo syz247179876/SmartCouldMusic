@@ -23,6 +23,8 @@ const Index = () =>
     import ('@/components/common/Index')
 const PlayVedio = () =>
     import ('@/components/music/PlayVedio')
+const PlayList = () =>
+    import ('@/components/music/PlayList')
 
 Vue.use(Router)
 
@@ -56,6 +58,13 @@ export default new Router({
             name: 'Detail',
             component: Detail,
         },
+        // 歌单列表
+        {
+            path: "/playlist/:id",
+            name: "PlayList",
+            component: PlayList
+        },
+        // 歌曲播放详情页
         {
             path: "/vedio-play/:id",
             name: "PlayVedio",

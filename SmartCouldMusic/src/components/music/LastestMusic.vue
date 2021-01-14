@@ -71,7 +71,7 @@ export default {
     perRequest() {
       // 懒加载请求
       this.$http
-        .get("/mv/first?limit=" + this.maxLength)
+        .get("/api/mv/first?limit=" + this.maxLength)
         .then((res) => {
           let data = res.data.data; // 数据列表
           for (let i = 0; i < this.maxLength; i++) {

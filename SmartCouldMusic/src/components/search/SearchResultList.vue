@@ -1,15 +1,32 @@
 <template>
   <div id="SearchResultIndexBar">
     <div v-if="hasData">
-      <p
-        v-for="(item, index) in searchResultList"
-        :key="index"
-        v-html="item.matchWord"
-      >
-        {{ item.matchWord }}
-      </p>
+      <!-- 音乐项 -->
+      <van-cell v-for="(music, index) in searchResultList" :key="index">
+        <template #default>
+          <span v-if="index === 0">
+            <span :class="rank_first">{{ index + 1 }}</span>
+          </span>
+          <span v-if="index === 1">
+            <span :class="rank_second">{{ index + 1 }}</span>
+          </span>
+          <span v-if="index === 2">
+            <span :class="rank_third">{{ index + 1 }}</span>
+          </span>
+          <span v-if="index > 2">
+            <span :class="rank_others">{{ index + 1 }}</span>
+          </span>
+          <span class="song-name" v-html="music.matchWord">
+            {{ music.matchWord }}
+            <!-- 播放图标 -->
+          </span>
+          <p class="artist">
+            {{ music.artistName }}
+          </p>
+        </template>
+      </van-cell>
     </div>
-    <div v-else>抱歉,没有搜索到任何数据</div>
+    <div v-else>正在搜索...抱歉,没有搜索到任何数据</div>
   </div>
 </template>
 
@@ -20,6 +37,10 @@ export default {
     return {
       NewTitle: "",
       hasData: true,
+      rank_first: "rank-1",
+      rank_second: "rank-2",
+      rank_third: "rank-3",
+      rank_others: "rank-others",
     };
   },
   watch: {
@@ -43,10 +64,6 @@ export default {
         .replace(/\d+/g, "")
         .trim()
         .split(" ");
-      //replace(/\+/g, '')
-      //replace("$kw:", '')
-      //.trim()
-      //split(" ")
       let re = "";
       for (let i = 0; i < keywords.length; i++) {
         if (i == keywords.length - 1) {
@@ -79,5 +96,45 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.artist {
+  font-size: 20px;
+  color: #989588;
+}
+.van-cell {
+  padding: 30px;
+  font-size: 25px;
+}
+.song-name {
+  margin-left: 10px;
+}
+
+/* 排名高亮等级 */
+.rank-1 {
+  color: red;
+  font-size: 35px;
+  font-weight: bolder;
+}
+.rank-2 {
+  color: orangered;
+  font-size: 30px;
+}
+.rank-3 {
+  color: orange;
+  font-size: 25px;
+}
+.rank-others {
+  color: black;
+  font-size: 20px;
+}
+
+.play-icon {
+  float: right;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-image: url(../../../static/img/list_sprite.png);
+  background-position-x: -47px;
+  background-position-y: 4px;
+}
 </style>

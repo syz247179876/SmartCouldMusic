@@ -14,7 +14,7 @@ export default {
   created() {
     // 发送请求
     this.$http
-      .get("/song/detail?ids=" + this.$route.query.sid)
+      .get("/api/song/detail?ids=" + this.$route.query.sid)
       // 成功回调
       .then((res) => {
         this.picture = res.data.songs[0].al.picUrl; // 图片

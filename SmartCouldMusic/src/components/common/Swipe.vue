@@ -26,15 +26,19 @@ export default {
     // 请求API
     getSwipe() {
       this.$http
-        .get("/banner/?type=2")
+        .get("/api/banner/?type=2")
         // 成功回调
         .then((res) => {
           let banners = res.data.banners;
           for (let i = this.start; i < this.end; i++) {
             let pic = banners[i].pic; // picture的路径
-            let bannerId = banners[i].bannerId  // banner的uid
-            let songId = banners[i].song.id
-            this.swipeList.push({ pic: pic, bannerId: bannerId, songId:songId });
+            let bannerId = banners[i].bannerId; // banner的uid
+            let songId = banners[i].song.id;
+            this.swipeList.push({
+              pic: pic,
+              bannerId: bannerId,
+              songId: songId,
+            });
           }
         })
         // 失败的回调
@@ -44,13 +48,21 @@ export default {
     },
     // 计算取数据的区间
     computeRetrieve() {
-      this.rand = Math.ceil(Math.random() * 2); // 生成0-3之间的随机数
-      this.start = this.rand; // 生成随机start
+      // this.rand = Math.ceil(Math.random() * 2); // 生成0-3之间的随机数
+      // this.start = this.rand; // 生成随机start
+      this.start = 0;
       this.end = this.start + this.swipeNumber;
     },
     // 进入详情页
     accessDetail(swipe) {
-      this.$router.push("/detail?pic="+swipe.pic+"&bid="+swipe.bannerId+"&sid="+swipe.songId);
+      this.$router.push(
+        "/api/detail?pic=" +
+          swipe.pic +
+          "&bid=" +
+          swipe.bannerId +
+          "&sid=" +
+          swipe.songId
+      );
     },
   },
   created() {

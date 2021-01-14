@@ -41,7 +41,7 @@ export default {
     // 获取推荐歌单
     getSong() {
       this.$http
-        .get("personalized?limit=" + this.rand * 10)
+        .get("/api/personalized?limit=" + this.rand * 10)
         .then((res) => {
           let result = res.data.result; // 获取结果列表
           for (let i = this.start; i < this.end; i++) {

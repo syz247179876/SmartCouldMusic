@@ -1,5 +1,5 @@
 <template>
-  <div id="LastestMusic">
+  <div id="LastestMV">
     <Title :name="title"></Title>
     <van-list
       v-model="loading"
@@ -9,7 +9,11 @@
       @load="onLoad"
     >
       <!-- 音乐项 -->
-      <van-cell v-for="(music, index) in displayList" :key="index">
+      <van-cell
+        v-for="(music, index) in displayList"
+        :key="index"
+        @click="toPlayVedio(music.id)"
+      >
         <template #default>
           <p>
             {{ music.songName }}
@@ -33,21 +37,22 @@
 
 <script>
 const Title = () => import("@/components/common/Title");
+import {Toast} from 'vant'
 
 export default {
-  name: "LastestMusic",
+  name: "LastestMV",
   components: { Title },
   data() {
     return {
       title: "最新音乐",
       finished_text: "正在拼命加载...",
-      musicList: [],   // 全部的最新音乐列表
+      musicList: [], // 全部的最新音乐列表
       finished: false,
       loading: false,
       perLength: 10, // 每次显示获取的数据长度
       startLength: 0, // 起始请求下标
       maxLength: 100,
-      displayList: [],   // 允许显示的最新音乐列表
+      displayList: [], // 允许显示的最新音乐列表
       status: [], // 播放状态列表, true表示正在播放,false表示未播放
     };
   },
@@ -90,17 +95,22 @@ export default {
       let item = document.getElementById(index); // 获取播放dom元素
       if (this.status[index] == false) {
         item.style.backgroundPositionY = "-46px";
-        this.status.forEach((element) => {
-          
-        });
+        this.status.forEach((element) => {});
         this.status[index] = true; // 正在播放状态
       } else {
         item.style.backgroundPositionY = "4px";
         this.status[index] = false; // 停止播放状态
       }
     },
+    // 播放MV
+    toPlayVedio(id) {
+      // this.$router.push("/vedio-play/" + id);
+      Toast.fail("MV播放尚未接入")
+    },
   },
+
   created() {
+    // 发起请求
     this.perRequest();
   },
 };

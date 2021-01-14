@@ -21,6 +21,9 @@ const New = () =>
     import ('@/components/rank/New')
 const Index = () =>
     import ('@/components/common/Index')
+const PlayVedio = () =>
+    import ('@/components/music/PlayVedio')
+
 Vue.use(Router)
 
 // 路由就是路径和组件的对应关系
@@ -52,6 +55,11 @@ export default new Router({
             path: "/detail",
             name: 'Detail',
             component: Detail,
+        },
+        {
+            path: "/vedio-play/:id",
+            name: "PlayVedio",
+            component: PlayVedio
         },
         // 匹配一切非正确页面,例如404页面
         {

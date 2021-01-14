@@ -2,20 +2,17 @@
   <div id="SearchResultIndexBar">
     <div v-if="hasData">
       <!-- 音乐项 -->
-      <van-cell v-for="(music, index) in searchResultList" :key="index">
+      <van-cell v-for="(music, index) in searchResultList" :key="index" @click="toPlayVedio(music.id)">
         <template #default>
-          <span v-if="index === 0">
-            <span :class="rank_first">{{ index + 1 }}</span>
-          </span>
-          <span v-if="index === 1">
-            <span :class="rank_second">{{ index + 1 }}</span>
-          </span>
-          <span v-if="index === 2">
-            <span :class="rank_third">{{ index + 1 }}</span>
-          </span>
-          <span v-if="index > 2">
-            <span :class="rank_others">{{ index + 1 }}</span>
-          </span>
+          <span
+            :class="[
+              { 'rank-first': index == 0 },
+              { 'rank-second': index == 1 },
+              { 'rank-third': index == 2 },
+              { 'rank-others': index > 2 },
+            ]"
+            >{{ index + 1 }}</span
+          >
           <span class="song-name" v-html="music.matchWord">
             {{ music.matchWord }}
             <!-- 播放图标 -->
@@ -37,25 +34,25 @@ export default {
     return {
       NewTitle: "",
       hasData: true,
-      rank_first: "rank-1",
-      rank_second: "rank-2",
-      rank_third: "rank-3",
-      rank_others: "rank-others",
     };
   },
   watch: {
     // 监听数组,将其中的关键字高亮, 显示是否搜索到数据
     searchResultList() {
-      if (this.searchResultList.length > 0) {
+      if (this.searchResultList.length > 0) {  // 如果存在数据
         this.hasData = true;
         this.searchResultList.forEach((element) => {
-          this.keywordscolorful(this.searchValue, element.matchWord);
+          this.keywordscolorful(this.searchValue, element.matchWord);   // 标红关键字
           element.matchWord = this.NewTitle;
         });
       } else this.hasData = false;
     },
   },
   methods: {
+    // 进入歌曲详情界面
+    toPlayVedio(id){
+      this.$router.push('/vedio-play/'+id)
+    },
     // 匹配最长公共字串
     keywordscolorful(keyword, title) {
       var keywords = keyword
@@ -110,16 +107,16 @@ export default {
 }
 
 /* 排名高亮等级 */
-.rank-1 {
+.rank-first {
   color: red;
   font-size: 35px;
   font-weight: bolder;
 }
-.rank-2 {
+.rank-second {
   color: orangered;
   font-size: 30px;
 }
-.rank-3 {
+.rank-third {
   color: orange;
   font-size: 25px;
 }
@@ -136,5 +133,14 @@ export default {
   background-image: url(../../../static/img/list_sprite.png);
   background-position-x: -47px;
   background-position-y: 4px;
+}
+
+.sq-icon {
+  display: inline-block;
+  width: 20px;
+  height: 10px;
+  background-image: url("../../../static/img/index_icon_2x.png");
+  background-position-x: -3px;
+  background-position-y: -3px;
 }
 </style>

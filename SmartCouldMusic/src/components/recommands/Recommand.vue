@@ -8,14 +8,14 @@
     <RecommandMV></RecommandMV>
     <!-- 推荐MV -->
     <RecommandRadio></RecommandRadio>
-    <!-- 最新音乐 -->
-    <LastestMusic></LastestMusic>
+    <!-- 最新MV -->
+    <LastestMV></LastestMV>
   </div>
 </template>
 
 <script>
 const Swipe = () => import("../common/Swipe");
-const LastestMusic = () => import("../music/LastestMusic");
+const LastestMV = () => import("../music/LastestMV");
 const RecommandRadio = () => import("../recommands/RecommandRadio");
 const RecommandMV = () => import("../recommands/RecommandMV");
 const RecommandSong = () => import("../recommands/RecommandSong");
@@ -28,7 +28,7 @@ export default {
     Swipe,
     RecommandRadio,
     RecommandMV,
-    LastestMusic,
+    LastestMV,
     RecommandSong,
   },
 };

@@ -103,9 +103,9 @@ export default {
           if (res.data != null) {
             // 根据api请求不同的类别
             if (res.data.result.songs != null)
-              this.appendSongResultList(res.data.result.songs);
-            else if (res.data.result.albums != null)
-              this.appendAlbumsResultList(res.data.result.albums);
+              this.appendSongResultList(res.data.result.songs);  // 此处只匹配歌曲
+            // else if (res.data.result.albums != null)
+            //   this.appendAlbumsResultList(res.data.result.albums);
           }
         });
     },

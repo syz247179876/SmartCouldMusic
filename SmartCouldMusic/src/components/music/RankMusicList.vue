@@ -8,20 +8,21 @@
       @load="onLoad"
     >
       <!-- 音乐项 -->
-      <van-cell v-for="(music, index) in displayList" :key="index">
+      <van-cell
+        v-for="(music, index) in displayList"
+        :key="index"
+        @click="toPlayVedio(music.id)"
+      >
         <template #default>
-          <span v-if="index === 0">
-            <span :class="rank_first">{{ index + 1 }}</span>
-          </span>
-          <span v-if="index === 1">
-            <span :class="rank_second">{{ index + 1 }}</span>
-          </span>
-          <span v-if="index === 2">
-            <span :class="rank_third">{{ index + 1 }}</span>
-          </span>
-          <span v-if="index > 2">
-            <span :class="rank_others">{{ index + 1 }}</span>
-          </span>
+          <span
+            :class="[
+              { 'rank-first': index == 0 },
+              { 'rank-second': index == 1 },
+              { 'rank-third': index == 2 },
+              { 'rank-others': index > 2 },
+            ]"
+            >{{ index + 1 }}</span
+          >
           <span class="song-name">
             {{ music.name }}
             <!-- 播放图标 -->
@@ -32,7 +33,9 @@
               @click="startRadio(music, index)"
             ></video>
           </span>
+
           <p class="artist">
+            <i class="sq-icon"></i>
             {{ artistStringList[index] }}
           </p>
         </template>
@@ -49,10 +52,6 @@ export default {
       finished_text: "正在拼命加载...",
       finished: false,
       loading: false,
-      rank_first: "rank-1",
-      rank_second: "rank-2",
-      rank_third: "rank-3",
-      rank_others: "rank-others",
       artistStringList: [], // 作者集数组,存放每一首歌曲的作者们
       displayList: [], // 允许显示的
       maxLength: 0,
@@ -69,6 +68,8 @@ export default {
     // 当数据传递过来时再解析
     musicList() {
       this.parseArtist();
+
+      // this.requestMusic();
     },
   },
   methods: {
@@ -91,6 +92,7 @@ export default {
     },
     // 解析作者
     parseArtist() {
+      while (this.musicList.length == 0) {}
       this.musicList.forEach((element) => {
         let artistList = [];
         element.artists.forEach((element) => {
@@ -103,6 +105,7 @@ export default {
     },
     // 播放音乐, 动态修改图标
     startRadio(music, index) {
+      this.requestMusic(this.musicList[index].id, index, this.status[index]);
       let video = document.getElementById(index); // 获取播放dom元素
       if (this.status[index] == false) {
         for (let i = 0; i < this.displayList.length; i++) {
@@ -113,27 +116,35 @@ export default {
         }
         video.style.backgroundPositionY = "-46px"; // 切换播放图标
         this.status[index] = true; // 设置正在播放
-        this.requestMusic(this.musicList[index].id, video, this.status[index]); // 播放音乐
       } else {
         video.style.backgroundPositionY = "4px";
         this.status[index] = false; // 设置停止播放
-        this.requestMusic(this.musicList[index].id, video, this.status[index]); // 暂停音乐
       }
+      this.playMusic(index, this.status[index]); // 播放/暂停音乐
+    },
+    // 播放音乐
+    playMusic(index, status) {
+      if (status == true) {
+        let video = document.getElementById(index);
+        video.play();
+      } else video.pause();
     },
     // 请求播放音乐接口
-    requestMusic(id, video, status) {
-      if (status == true) {
+    requestMusic(id, index, status) {
+      if (status == false) {
         this.$http
           .get("/music-play/song/media/outer/url?id=" + id)
           .then((res) => {
-            console.log(video)
             this.mp3Src = res.request.responseURL; // 获取响应的mp3 src
-            video.play(); // 播放
           })
           .catch((err) => {});
       } else {
         video.pause(); // 暂停播放
       }
+    },
+    // 进入播放歌曲详细界面
+    toPlayVedio(id) {
+      this.$router.push("/vedio-play/" + id);
     },
   },
 };
@@ -153,16 +164,16 @@ export default {
 }
 
 /* 排名高亮等级 */
-.rank-1 {
+.rank-first {
   color: red;
   font-size: 35px;
   font-weight: bolder;
 }
-.rank-2 {
+.rank-second {
   color: orangered;
   font-size: 30px;
 }
-.rank-3 {
+.rank-third {
   color: orange;
   font-size: 25px;
 }
@@ -179,5 +190,14 @@ export default {
   background-image: url(../../../static/img/list_sprite.png);
   background-position-x: -47px;
   background-position-y: 4px;
+}
+
+.sq-icon {
+  display: inline-block;
+  width: 20px;
+  height: 10px;
+  background-image: url("../../../static/img/index_icon_2x.png");
+  background-position-x: -3px;
+  background-position-y: -3px;
 }
 </style>

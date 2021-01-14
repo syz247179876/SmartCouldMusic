@@ -6,7 +6,6 @@
         v-for="(item, index) in RecommandSongList"
         :key="index"
         :to="item.detail_url"
-        @click="intoDetail(item.url)"
       >
         <div>
           <van-image :src="item.picture_url" />

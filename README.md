@@ -54,7 +54,32 @@ proxyTable: {
         },
 ```
 
+---
+## 效果截图
 
+![https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_1.png](https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_1.png)
+
+---
+
+![https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_2.png](https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_2.png)
+
+---
+
+![https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_3.png](https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_3.png)
+
+---
+
+![https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_4.png](https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_4.png)
+
+---
+
+![https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_5.png](https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_5.png)
+
+---
+
+![https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_6.png](https://django-blog-syz.oss-cn-shanghai.aliyuncs.com/git_smartcloudmusic_6.png)
+
+---
 ## 最后一句
 
 本项目是第一次使用vue.js框架进行开发的小项目，项目中或多或少存在可能不够优化的地方，还请大佬们见谅，适合新手的一个项目。

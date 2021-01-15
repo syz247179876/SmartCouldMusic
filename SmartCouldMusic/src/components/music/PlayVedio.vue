@@ -1,25 +1,29 @@
 <template>
   <div id="PlayVedio">
     <button class="back" @click="onBack">返回</button>
-
+    <!-- 动画布局 -->
+    <!-- 摆动 -->
+    <div
+      :class="['needle', { 'cd-animation2': status }, { 'cd-stop2': !status }]"
+    ></div>
     <div class="cd">
-      <div>
-        <img
-          :class="[
-            'midpic',
-            { 'cd-animation1': status },
-            { 'cd-stop1': !status },
-          ]"
-          :src="$route.query.pic"
-          width="188px"
-        />
-        <video
-          :src="mp3Src"
-          :id="id"
-          class="play-icon"
-          @click="startRadio"
-        ></video>
-      </div>
+      <!-- 旋转图片  -->
+
+      <img
+        :class="[
+          'midpic',
+          { 'cd-animation1': status },
+          { 'cd-stop1': !status },
+        ]"
+        :src="$route.query.pic"
+        width="188px"
+      />
+      <video
+        :src="mp3Src"
+        :id="id"
+        class="play-icon"
+        @click="startRadio"
+      ></video>
     </div>
     <div class="lrc-div">
       <div
@@ -165,6 +169,7 @@ export default {
   margin: 5px 0px 0px 5px;
 }
 
+/* 歌曲内容 */
 .lrc-div {
   width: 85%;
   height: 450px;
@@ -208,6 +213,46 @@ export default {
   }
 }
 
+.cd-animation2 {
+  animation: 6s animation2 infinite linear;
+  transform: rotate(0deg);
+}
+.cd-stop2 {
+  animation: 6s animation2 infinite linear;
+  animation-play-state: paused;
+}
+
+@keyframes animation2 {
+  0% {
+    transform: rotate(360deg);
+    transform-origin: 28% 21%;
+  }
+  15% {
+    transform: rotate(365deg);
+    transform-origin: 28% 21%;
+  }
+  30% {
+    transform: rotate(370deg);
+    transform-origin: 28% 21%;
+  }
+  50% {
+    transform: rotate(380deg);
+    transform-origin: 28% 21%;
+  }
+  70% {
+    transform: rotate(370deg);
+    transform-origin: 28% 21%;
+  }
+  85% {
+    transform: rotate(365deg);
+    transform-origin: 28% 21%;
+  }
+  100% {
+    transform: rotate(360deg);
+    transform-origin: 28% 21%;
+  }
+}
+
 .midpic {
   display: block;
   border-radius: 50%;
@@ -233,5 +278,15 @@ export default {
   background-image: url("../../../static/img/list_sprite.png");
   background-position-x: -47px;
   background-position-y: 4px;
+}
+
+.needle {
+  background-image: url("../../../static/img/needle-ip6.png");
+  background-size: cover;
+  z-index: 996;
+  height: 150px;
+  width: 105px;
+  left: 50%;
+  position: absolute;
 }
 </style>

@@ -13,6 +13,7 @@
 
 <script>
 const RankMusicList = () => import("@/components/music/RankMusicList");
+import { Toast } from "vant";
 export default {
   name: "New",
   components: { RankMusicList },
@@ -38,7 +39,9 @@ export default {
           this.coverImgUrl = playList.coverImgUrl; // 排行榜图片
           this.tracks = playList.tracks; // 歌曲榜单数组
         })
-        .catch((err) => {});
+        .catch((err) => {
+          Toast.fail("请求超时,请再次重试");
+        });
     },
     // 对时间追加0
     add0(element) {
@@ -69,6 +72,7 @@ export default {
           id: element.id, // 歌曲id
           artists: element.ar, // 作者们的信息
           publishTime: element.publishTime, // 发布时间
+          picUrl:element.al.picUrl,     // 歌曲图片
         });
         this.status.push(false);
       });

@@ -4,7 +4,7 @@
       <van-swipe-item
         v-for="(swipe, index) in swipeList"
         :key="index"
-        @click="accessDetail(swipe)"
+        @click="accessDetail(swipe.url)"
       >
         <img :src="swipe.pic" :class="picture" />
       </van-swipe-item>
@@ -13,11 +13,12 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   name: "Swipe",
   data() {
     return {
-      swipeNumber: 5, // 轮播图最大个数
+      swipeNumber: 6, // 轮播图最大个数
       swipeList: [], // 轮播图列表HelloWorld
       picture: "picture",
     };
@@ -33,17 +34,17 @@ export default {
           for (let i = this.start; i < this.end; i++) {
             let pic = banners[i].pic; // picture的路径
             let bannerId = banners[i].bannerId; // banner的uid
-            let songId = banners[i].song.id;
+            let url = banners[i].url;
             this.swipeList.push({
               pic: pic,
               bannerId: bannerId,
-              songId: songId,
+              url: url,
             });
           }
         })
         // 失败的回调
         .catch((err) => {
-          // Toast.err(res.data);
+          Toast.fail("轮播图请求超时,请再次重试");
         });
     },
     // 计算取数据的区间
@@ -53,16 +54,9 @@ export default {
       this.start = 0;
       this.end = this.start + this.swipeNumber;
     },
-    // 进入详情页
-    accessDetail(swipe) {
-      this.$router.push(
-        "/api/detail?pic=" +
-          swipe.pic +
-          "&bid=" +
-          swipe.bannerId +
-          "&sid=" +
-          swipe.songId
-      );
+    // 进入给定地址
+    accessDetail(url) {
+      window.location.href = url
     },
   },
   created() {

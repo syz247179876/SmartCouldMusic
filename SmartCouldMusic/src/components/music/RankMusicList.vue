@@ -11,7 +11,7 @@
       <van-cell
         v-for="(music, index) in displayList"
         :key="index"
-        @click="toPlayVedio(music.id)"
+        @click="toPlayVedio(music.id, music.picUrl)"
       >
         <template #default>
           <span
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   name: "RankMusicList",
   data() {
@@ -135,14 +136,16 @@ export default {
           .then((res) => {
             this.mp3Src = res.request.responseURL; // 获取响应的mp3 src
           })
-          .catch((err) => {});
+          .catch((err) => {
+            Toast.fail("请求超时,请再次重试");
+          });
       } else {
         video.pause(); // 暂停播放
       }
     },
     // 进入播放歌曲详细界面
-    toPlayVedio(id) {
-      this.$router.push("/vedio-play/" + id);
+    toPlayVedio(id, picUrl) {
+      this.$router.push("/vedio-play/" + id + "?pic=" + picUrl);
     },
   },
 };

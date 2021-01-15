@@ -8,6 +8,7 @@
             backgroundImage: 'url(' + coverImgUrl + ')',
           }"
         >
+          <!-- 封面 -->
           <img :src="coverImgUrl" class="picture" />
           <span class="describe">{{ describe }}</span>
         </div>
@@ -20,6 +21,7 @@
 </template>
 <script>
 const RankMusicList = () => import("@/components/music/RankMusicList");
+import { Toast } from "vant";
 export default {
   name: "PlayList",
   components: { RankMusicList },
@@ -56,33 +58,37 @@ export default {
             let artists = element.ar; // 歌手名数组
             let id = element.id; // 歌曲id
             let name = element.name; // 歌曲名
+            let picUrl = element.al.picUrl; // 歌曲图片
             this.musicList.push({
               artists: artists,
               id: id,
               name: name,
+              picUrl: picUrl,
             });
             this.status.push(false);
           });
         })
-        .catch((err) => {});
+        .catch((err) => {
+          Toast.fail("请求超时,请再次重试");
+        });
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .picture {
   width: 150px;
   z-index: 965;
   left: 20px;
   right: 200px;
   opacity: 1 !important;
-  top:20px;
-  margin:40px 0px 40px 20px;
+  top: 20px;
+  margin: 40px 0px 40px 20px;
 }
 .describe {
   float: right;
-  margin:50px 40px 40px 20px;
+  margin: 50px 40px 40px 20px;
   color: white;
   opacity: 1 !important;
   z-index: 997;

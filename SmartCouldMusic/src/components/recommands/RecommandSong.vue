@@ -19,6 +19,7 @@
 
 <script>
 const Title = () => import("@/components/common/Title");
+import {Toast} from 'vant'
 export default {
   name: "RecommandSong",
   components: { Title },
@@ -47,18 +48,22 @@ export default {
           for (let i = this.start; i < this.end; i++) {
             let name = result[i].name; // 获取歌单介绍
             let picUrl = result[i].picUrl; // 获取歌单图片
-            let id = result[i].id;     // 获取歌单id
-            this.RecommandSongList.push({ text: name, picture_url: picUrl, id:id }); // 加入队列
+            let id = result[i].id; // 获取歌单id
+            this.RecommandSongList.push({
+              text: name,
+              picture_url: picUrl,
+              id: id,
+            }); // 加入队列
           }
         })
         .catch((err) => {
-          // Toast.err(res.data);
+          Toast.fail("推荐歌单请求超时,请再次重试");
         });
     },
     // 进入歌单详情页
-    toSongList(id){
-      this.$router.push('/playlist/'+id); 
-    }
+    toSongList(id) {
+      this.$router.push("/playlist/" + id);
+    },
   },
 };
 </script>
@@ -66,12 +71,11 @@ export default {
 <style>
 .introduce {
   font-size: 16px;
-  margin:0;
+  margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2;   /* 两行 */
+  -webkit-line-clamp: 2; /* 两行 */
   -webkit-box-orient: vertical;
-  text-overflow: ellipsis;/* 省略号 */
-  overflow: hidden;  /* 隐藏额外内容 */
+  text-overflow: ellipsis; /* 省略号 */
+  overflow: hidden; /* 隐藏额外内容 */
 }
-
 </style>

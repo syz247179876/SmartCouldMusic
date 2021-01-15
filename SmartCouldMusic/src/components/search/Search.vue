@@ -66,11 +66,15 @@ export default {
     // 将歌曲数据集添加到数组中
     appendSongResultList(array) {
       array.forEach((element) => {
+        let picUrl = "";
+        if (element.artists[0].picUrl != null)
+          picUrl = element.artists[0].picUrl;
+        else picUrl = element.artists[0].img1v1Url;
         this.searchResultList.push({
           matchWord: element.name, //  匹配唱片
           id: element.id,
           artistName: this.parseArtistName(element.artists), // 作者名字
-          imageUrl: element.img1v1Url, // 背景图片
+          picUrl: picUrl, // 背景图片
         });
       });
     },
@@ -103,7 +107,7 @@ export default {
           if (res.data != null) {
             // 根据api请求不同的类别
             if (res.data.result.songs != null)
-              this.appendSongResultList(res.data.result.songs);  // 此处只匹配歌曲
+              this.appendSongResultList(res.data.result.songs); // 此处只匹配歌曲
             // else if (res.data.result.albums != null)
             //   this.appendAlbumsResultList(res.data.result.albums);
           }

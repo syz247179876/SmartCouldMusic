@@ -37,7 +37,7 @@
 
 <script>
 const Title = () => import("@/components/common/Title");
-import {Toast} from 'vant'
+import { Toast } from "vant";
 
 export default {
   name: "LastestMV",
@@ -88,7 +88,9 @@ export default {
             this.status.push(false);
           }
         })
-        .catch((err) => {});
+        .catch((err) => {
+          // Toast.fail("最新音乐超时,请再次重试");
+        });
     },
     // 播放音乐, 动态修改图标
     startRadio(music, index) {
@@ -105,7 +107,7 @@ export default {
     // 播放MV
     toPlayVedio(id) {
       // this.$router.push("/vedio-play/" + id);
-      Toast.fail("MV播放尚未接入")
+      Toast.fail("MV播放尚未接入");
     },
   },
 

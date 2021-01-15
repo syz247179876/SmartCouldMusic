@@ -2,7 +2,11 @@
   <div id="SearchResultIndexBar">
     <div v-if="hasData">
       <!-- 音乐项 -->
-      <van-cell v-for="(music, index) in searchResultList" :key="index" @click="toPlayVedio(music.id)">
+      <van-cell
+        v-for="(music, index) in searchResultList"
+        :key="index"
+        @click="toPlayVedio(music.id, music.picUrl)"
+      >
         <template #default>
           <span
             :class="[
@@ -39,10 +43,11 @@ export default {
   watch: {
     // 监听数组,将其中的关键字高亮, 显示是否搜索到数据
     searchResultList() {
-      if (this.searchResultList.length > 0) {  // 如果存在数据
+      if (this.searchResultList.length > 0) {
+        // 如果存在数据
         this.hasData = true;
         this.searchResultList.forEach((element) => {
-          this.keywordscolorful(this.searchValue, element.matchWord);   // 标红关键字
+          this.keywordscolorful(this.searchValue, element.matchWord); // 标红关键字
           element.matchWord = this.NewTitle;
         });
       } else this.hasData = false;
@@ -50,8 +55,8 @@ export default {
   },
   methods: {
     // 进入歌曲详情界面
-    toPlayVedio(id){
-      this.$router.push('/vedio-play/'+id)
+    toPlayVedio(id, picUrl) {
+      this.$router.push("/vedio-play/" + id + "?pic=" + picUrl);
     },
     // 匹配最长公共字串
     keywordscolorful(keyword, title) {

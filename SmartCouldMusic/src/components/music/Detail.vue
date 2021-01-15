@@ -8,6 +8,7 @@
 </template>
 
 <script>
+
 export default {
   components: { },
   name: "Detail",
@@ -23,7 +24,7 @@ export default {
       })
       // 失败的回调
       .catch((err) => {
-        Toast.err(res.data);
+         Toast.fail("请求超时,请再次重试");
       });
   },
   data() {

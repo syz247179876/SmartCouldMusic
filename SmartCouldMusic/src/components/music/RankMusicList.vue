@@ -145,7 +145,7 @@ export default {
     },
     // 进入播放歌曲详细界面
     toPlayVedio(id, picUrl) {
-      this.$router.push("/vedio-play/" + id + "?pic=" + picUrl);
+      this.$router.push("/vedio-play/" + id + "?pic=" + picUrl + '&next=' +this.$route.path);
     },
   },
 };

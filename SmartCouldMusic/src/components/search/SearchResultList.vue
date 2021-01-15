@@ -56,7 +56,7 @@ export default {
   methods: {
     // 进入歌曲详情界面
     toPlayVedio(id, picUrl) {
-      this.$router.push("/vedio-play/" + id + "?pic=" + picUrl);
+      this.$router.push("/vedio-play/" + id + "?pic=" + picUrl + "&next=" + this.$route.path);
     },
     // 匹配最长公共字串
     keywordscolorful(keyword, title) {

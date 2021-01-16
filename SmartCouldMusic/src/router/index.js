@@ -25,6 +25,8 @@ const PlayVedio = () =>
     import ('@/components/music/PlayVedio')
 const PlayList = () =>
     import ('@/components/music/PlayList')
+const play = () =>
+    import ('@/components/music/play')
 
 Vue.use(Router)
 
@@ -67,8 +69,8 @@ export default new Router({
         // 歌曲播放详情页
         {
             path: "/vedio-play/:id",
-            name: "PlayVedio",
-            component: PlayVedio
+            name: "play",
+            component: play
         },
         // 匹配一切非正确页面,例如404页面
         {
